@@ -18,10 +18,18 @@ public class StopwatchDemo {
     }
 
     public static void main(String[] args) {
-        Stopwatch sw = new Stopwatch();
-        int fib41 = fib(41);
-        double timeInSeconds = sw.elapsedTime();
-        System.out.println("The 50th fibonacci number is " + fib41);
-        System.out.println("Time taken to compute 41st fibonacci number: " + timeInSeconds + " seconds.");
+        Stopwatch swall = new Stopwatch();
+//        int fib41 = fib(41);
+        double timeInSeconds = swall.elapsedTime();
+//        double fib43 = fib(43);
+        for (int i = 0; i < 44; i++) {
+            Stopwatch sw = new Stopwatch();
+            double fib = fib(i);
+            double t = sw.elapsedTime();
+            System.out.println(i+","+t);
+        }
+        double all_t = swall.elapsedTime();
+//        System.out.println("Time taken to compute 41st fibonacci number: " + timeInSeconds + " seconds.");
+        System.out.println("all"+all_t);
     }
 }
