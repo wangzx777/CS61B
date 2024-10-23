@@ -8,7 +8,7 @@ public class BSTMap<K extends Comparable<K>,V> implements Map61B<K,V>{
 
     private int size;
     private Node root;
-    Set<K> keyset = new HashSet<>();
+    private Set<K> keyset = new HashSet<>();
 
 
     private class Node {
@@ -25,10 +25,10 @@ public class BSTMap<K extends Comparable<K>,V> implements Map61B<K,V>{
         }
 
         }
-    public BSTMap(K key,V value,Node left,Node right) {
-        this.root = new Node(key,value,left,right);
-        size = 1;
-    }
+//    public BSTMap(K key,V value,Node left,Node right) {
+//        this.root = new Node(key,value,left,right);
+//        size = 1;
+//    }
     public BSTMap() {}
 
     @Override
@@ -127,32 +127,32 @@ public class BSTMap<K extends Comparable<K>,V> implements Map61B<K,V>{
         throw new UnsupportedOperationException();
     }
 
-    private void printOrder(Node p) {
+    private void printInOrder(Node p) {
         if (p == null) {
             return;
         }
-        printOrder(p.left);
+        printInOrder(p.left);
         System.out.println(p.key);
-        printOrder(p.right);
+        printInOrder(p.right);
     }
-    public void printOrder() {
-        printOrder(root);
+    public void printInOrder() {
+        printInOrder(root);
     }
 
 
-    public static void main(String[] args) {
-        BSTMap<Integer,String> bstMap= new BSTMap<>();
-        bstMap.put(2,"a");
-        for (int i = 97; i < 108; i++) {
-            String s = " " + i;
-            bstMap.put(i,s);
-        }
-        for (int i = 23; i < 33; i++) {
-            String s = " " + i;
-            bstMap.put(i,s);
-        }
-        bstMap.printOrder();
-    }
+//    public static void main(String[] args) {
+//        BSTMap<Integer,String> bstMap= new BSTMap<>();
+//        bstMap.put(2,"a");
+//        for (int i = 97; i < 108; i++) {
+//            String s = " " + i;
+//            bstMap.put(i,s);
+//        }
+//        for (int i = 23; i < 33; i++) {
+//            String s = " " + i;
+//            bstMap.put(i,s);
+//        }
+//        bstMap.printOrder();
+//    }
 
     }
 
