@@ -1,10 +1,10 @@
 package deque;
 
-public class ArrayDeque<T> {
-    private int size;
-    private T[] items;
-    private int first;
-    private int last;
+public class ArrayDeque<T> implements Deque<T>{
+    protected int size;
+    protected T[] items;
+    protected int first;
+    protected int last;
 
     public ArrayDeque() {
         items = (T[]) new Object[8];
@@ -14,19 +14,21 @@ public class ArrayDeque<T> {
     }
 
     public void resize() {
-        T[] a = (T[]) new Object[size * 2];
-        int oldItems = items.length;
-        int i = (first + 1) % items.length;
-        for (int j = 0; j < items.length; j++) {
+        T[] a = (T[]) new Object[items.length * 2];
+        int oldLen = items.length;
+        int i = (first + 1) % oldLen; /*新数组的对应原来数组的位置*/
+        int j = 1;
+        while ((i+oldLen) % oldLen != last) {
             a[j] = items[i];
-            i = (i + 1) % items.length;
+            i = (i + 1) % oldLen;
+            j = (j + 1) % oldLen;
         }
         items = a;
-        first = items.length - 1;
-        last = oldItems;
+        first = 0;
+        last = oldLen;
     }
     public void addLast(T x) {
-        if (size == items.length) {
+        if (first == last) {
             resize();
         }
         items[last] = x;
@@ -35,7 +37,7 @@ public class ArrayDeque<T> {
     }
 
     public void addFirst(T x) {
-        if (size == items.length) {
+        if (first == last) {
             resize();
         }
         items[first] = x;
@@ -43,30 +45,44 @@ public class ArrayDeque<T> {
         size += 1;
     }
 
-    
+
 
     public int size() {
         return size;
     }
 
-    public T remove() {
-        T x = items[size - 1];
+    public T removeFirst() {
+        if (isEmpty()) {
+            return null;
+        }
+        first  = (first + 1 + items.length) % items.length;
+        T item = items[first];
+        items[first] = null;
         size = size - 1;
-        return x;
+        return item;
     }
 
+    public T removeLast() {
+        if (isEmpty()) {
+            return null;
+        }
+        last  = (last - 1 + items.length) % items.length;
+        T item = items[last];
+        items[last] = null;
+        size = size - 1;
+        return item;
+    }
+
+
     public T get(int index) {
-        return items[index - first];
+        return items[(first + index + 1) % items.length];
     }
 
     public void printDeque() {
         int i = (first + 1) % items.length;
-        for (int j = 0; j < items.length; j++) {
-            if (items[i] == null) {
-                break;
-            }
-            System.out.print(items[i] + " ");
-            i = (i + 1) % items.length;
+        while (i != last) {
+            System.out.print(items[i]+" ");
+            i = (i+1) % items.length;
         }
     }
 
@@ -78,7 +94,5 @@ public class ArrayDeque<T> {
         System.arraycopy(other.items, 0, items, 0, other.items.length);
     }
 
-    public static void main(String[] args) {
 
-    }
 }

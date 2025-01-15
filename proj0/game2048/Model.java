@@ -109,6 +109,7 @@ public class Model extends Observable {
     public boolean tilt(Side side) {
         boolean changed;
         changed = false;
+        
 
         // TODO: Modify this.board (and perhaps this.score) to account
         // for the tilt to the Side SIDE. If the board changed, set the
@@ -138,7 +139,17 @@ public class Model extends Observable {
      * */
     public static boolean emptySpaceExists(Board b) {
         // TODO: Fill in this function.
-        return false;
+        int size = b.size();
+        boolean flag = false;
+        for(int row = 0; row < size; row++){
+            for(int col = 0; col < size; col++){
+                if (b.tile(col,row) == null){
+                    flag = true;
+                    break;
+                }
+            }
+        }
+        return flag;
     }
 
     /**
@@ -147,8 +158,20 @@ public class Model extends Observable {
      * given a Tile object t, we get its value with t.value().
      */
     public static boolean maxTileExists(Board b) {
-        // TODO: Fill in this function.
-        return false;
+        boolean flag = false;
+        int size = b.size();
+        for (int col = 0; col < size; col++ ){
+            for (int row = 0; row < size; row++){
+                if (b.tile(col,row) == null){
+                    continue;
+                }
+                if (b.tile(col,row).value() == MAX_PIECE){
+                    flag = true;
+                    break;
+                }
+            }
+        }
+        return flag;
     }
 
     /**
@@ -159,6 +182,38 @@ public class Model extends Observable {
      */
     public static boolean atLeastOneMoveExists(Board b) {
         // TODO: Fill in this function.
+        /**水平方向上是否存在相同元素**/
+        int size = b.size();
+        for (int row = 0; row < size; row++){
+            int left = 0;
+            int right = 1;
+            while (right < size){
+                Tile left_tile = b.tile(left,row);
+                Tile right_tile = b.tile(right,row);
+                if (left_tile == null || right_tile == null){
+                    return true;
+                }
+                else if (left_tile.value() == right_tile.value()){
+                    return true;
+                }
+                left++;
+                right++;
+            }
+        }
+        /**垂直方向上是否存在相同元素**/
+        for (int col = 0; col < size; col++){
+            int left = 0;
+            int right = 1;
+            while (right < size){
+                Tile left_tile = b.tile(col,left);
+                Tile right_tile = b.tile(col,right);
+                if (left_tile.value() == right_tile.value()){
+                    return true;
+                }
+                left++;
+                right++;
+            }
+        }
         return false;
     }
 
